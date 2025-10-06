@@ -332,17 +332,17 @@ function showGameOver(win) {
   const text = `あなたのバランス力は ${score} 点！`;
   function shareToX() {
     const u = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text) + '&url=' + encodeURIComponent(pageUrl);
-    window.open(u, '_blank', 'noopener');
+    window.open(u, '_blank', 'noopener,noreferrer');
   }
   function shareToLINE() {
     // LINE text share: use text + url
     const u = 'https://line.me/R/msg/text/?' + encodeURIComponent(text + ' ' + pageUrl);
-    window.open(u, '_blank', 'noopener');
+    window.open(u, '_blank', 'noopener,noreferrer');
   }
   function shareToThreads() {
     // Use Threads web intent for挙動の統一（新規タブを開く）
     const u = 'https://www.threads.net/intent/post?text=' + encodeURIComponent(text + '\n' + pageUrl);
-    window.open(u, '_blank', 'noopener');
+    window.open(u, '_blank', 'noopener,noreferrer');
   }
   document.getElementById('shareX')?.addEventListener('click', shareToX);
   document.getElementById('shareLINE')?.addEventListener('click', shareToLINE);

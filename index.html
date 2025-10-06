@@ -4,6 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#0a0a0a" />
+    <meta name="referrer" content="no-referrer" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests" />
     <title>Balance Your Life!</title>
     <meta name="description" content="ワークとライフのバランスを取るブラウザゲーム" />
     <style>
@@ -41,38 +43,6 @@
   <body>
     <canvas id="game"></canvas>
     <div class="overlay" id="overlay" aria-hidden="true"></div>
-    <script>
-      (function(){
-        const overlay = document.getElementById('overlay');
-        function show(msg){
-          overlay.innerHTML = '<div style="text-align:center; padding:24px; background:rgba(0,0,0,0.35); border-radius:12px; max-width:560px;">'+msg+'</div>';
-          overlay.style.opacity = '1';
-          overlay.style.pointerEvents = 'auto';
-        }
-        if (location.protocol === 'file:') {
-          show('このページはローカルファイルとして開くと表示されません。<br>簡易サーバーで <code>http://localhost</code> から開いてください。<br><br><b>例:</b> ターミナルでリポジトリ直下に移動して<br><code>python3 -m http.server 8000</code><br>を実行し、<code>http://localhost:8000/public/</code> を開いてください。');
-          return;
-        }
-        // Load the main module dynamically when served over http(s)
-        // Try ./src (for GitHub Pages site root) then ../src (for local /public/ serving)
-        const candidates = [
-          new URL('./src/main.js', location.href).toString(),
-          new URL('../src/main.js', location.href).toString()
-        ];
-        (async () => {
-          for (const u of candidates) {
-            try {
-              const res = await fetch(u, { method: 'HEAD', cache: 'no-cache' });
-              if (res.ok) { await import(u); return; }
-            } catch {}
-          }
-          const msg = 'スクリプトの読み込みに失敗しました。環境設定をご確認ください。';
-          show(msg);
-        })();
-        window.addEventListener('error', function(e){
-          show('エラーが発生しました:<br><small>'+String(e && e.message ? e.message : e)+'</small>');
-        });
-      })();
-    </script>
+    <script type="module" src="./src/boot.js"></script>
   </body>
   </html>
